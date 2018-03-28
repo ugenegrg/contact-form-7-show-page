@@ -1,0 +1,37 @@
+.wpcf7sp_panel h4 {
+    margin: 1.33em 0 .5em 0;
+}
+table.wpcf7sp {
+    width: 100%;
+    border: 1px inset #fff;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: small;
+}
+table.wpcf7sp tr {
+
+}
+table.wpcf7sp th {
+    text-align: left;
+    padding: 10px 5px;
+    background: #e5e5e5;
+    border: 1px solid #dedede;
+}
+table.wpcf7sp td {
+    text-align: left;
+    padding: 10px;
+}
+.wpcf7sp-opt {
+    text-align: right !important;
+}
+a.wpcf7sp-alink {
+    background: #0085ba ;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: small;
+}
+table.wpcf7sp tr:nth-child( odd ) {
+    background: #f0f0f0;
+}
