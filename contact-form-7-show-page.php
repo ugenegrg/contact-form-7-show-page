@@ -73,8 +73,6 @@ function wpcf7sp_search_on_posttypes( $form_id ) {
         $wpcf7sp_posttypes = get_post_types( array( 'public' => true ) );
     }
 
-    var_dump( $wpcf7sp_search_string );
-
     $post_query = new WP_Query( array(
         's'         => $wpcf7sp_search_string,
         'post_type' => $wpcf7sp_posttypes
@@ -117,10 +115,10 @@ function wpcf7sp_search_on_posttypes( $form_id ) {
 
 /**
 
-Search on postypes.
+Search on text widget.
 
 */
-function wpcf7sp_search_on_textwidget( $form_id ) {
+function wpcf7sp_search_on_text_widget( $form_id ) {
     $wpcf7sp_search_string = wpcf7sp_search_string( $form_id );
     // Query for the text widgets with the contact form.
     global $wpdb;
@@ -167,12 +165,86 @@ function wpcf7sp_search_on_textwidget( $form_id ) {
         $side_bar_ids = array_unique( $side_bar_ids );
         ?>
 
-        <h4><?php _e( 'Lists of Text widgets using this form.', 'wpcf7sp' ); ?></h4>
+        <h4><?php _e( 'Lists of areas using this form.', 'wpcf7sp' ); ?></h4>
         <?php if ( ! is_null( $wpcf7sp_text_widgets ) ): ?>
             <table class="wpcf7sp" style="width: 50%;">
                 <tbody>
                 <tr>
-                    <th><?php _e( 'Widgets', 'wpcf7sp' ); ?></th>
+                    <th><?php _e( 'Widget: Text', 'wpcf7sp' ); ?></th>
+                </tr>
+                <?php
+                foreach ( $side_bar_ids as $value ) {
+                    global $wp_registered_sidebars;
+                    if ( isset( $wp_registered_sidebars[ $value ] ) ) {
+                        echo '<tr><td>' . esc_html( $wp_registered_sidebars[ $value ]['name'] ) . '</td></tr>';
+                    }
+                }
+                ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    <?php } else { ?>
+        <h4><?php _e( 'No Text widgets uses this form right now.', 'wpcf7sp' ); ?></h4>
+    <?php }
+}
+
+/**
+
+Search on text widget.
+
+*/
+function wpcf7sp_search_on_custom_html_widget( $form_id ) {
+    $wpcf7sp_search_string = wpcf7sp_search_string( $form_id );
+    // Query for the text widgets with the contact form.
+    global $wpdb;
+    // Get prefixed table name.
+    $wpcf7sp_table = $wpdb->prefix . 'options';
+    // Prepare query which searches for option name with widget_text and also verify for the empty and no form used condition.
+    $wpcf7sp_widget_query   = $wpdb->prepare( "SELECT * FROM `$wpcf7sp_table` WHERE `option_name` LIKE '%%widget_custom_html%%' AND `option_value` LIKE '%%%s%%'", $wpcf7sp_search_string );
+    $wpcf7sp_widget_results = $wpdb->get_results( $wpcf7sp_widget_query );
+    if ( isset( $wpcf7sp_widget_results[0] )) {
+        $wpcf7sp_widget_results = $wpcf7sp_widget_results[0];
+        // Unserialize data which contains all the text widgets found.
+        $wpcf7sp_text_widgets = maybe_unserialize( $wpcf7sp_widget_results->option_value );
+
+        // Prepare search string to be searched in result.
+        $serach_expression = '/\[' . $wpcf7sp_search_string . '/';
+        $widget_ids        = [];
+        foreach ( $wpcf7sp_text_widgets as $key => $value ) {
+            if ( is_array( $value ) ) {
+                // Check if the value is set and not empty and match with the search expression.
+                if ( isset( $value['content'] ) && ! empty( $value['content'] ) && preg_match( $serach_expression, $value['content'] ) ) {
+                    // Append 'text-' to make it comparable in later in_array condition.
+                    $widget_ids[] = 'custom_html-' . $key;
+                }
+            }
+        }
+        // Query for the sidebars with the above found text widgets.
+        $widget_resp_sidebar_query = "SELECT * FROM `$wpcf7sp_table` WHERE `option_name` = 'sidebars_widgets'";
+        $widget_resp_sidebar_res   = $wpdb->get_results( $widget_resp_sidebar_query );
+        // Unserialize data which contains all the sidebars.
+        $widget_resp_sidebar_res = maybe_unserialize( $widget_resp_sidebar_res[0]->option_value );
+
+        $side_bar_ids = [];
+        foreach ( $widget_resp_sidebar_res as $key => $value ) {
+            if ( ! empty( $value ) && is_array( $value ) ) {
+                for ( $i = 0; $i < count( $value ); $i ++ ) {
+                    // Check if the above widget_ids is in the recently found array.
+                    if ( in_array( $value[ $i ], $widget_ids ) ) {
+                        $side_bar_ids[] = $key;
+                    }
+                }
+            }
+        }
+        // Removing any repeating sidebar id.
+        $side_bar_ids = array_unique( $side_bar_ids );
+        ?>
+
+        <?php if ( ! is_null( $wpcf7sp_text_widgets ) ): ?>
+            <table class="wpcf7sp" style="width: 50%;">
+                <tbody>
+                <tr>
+                    <th><?php _e( 'Widget: Custom HTML', 'wpcf7sp' ); ?></th>
                 </tr>
                 <?php
                 foreach ( $side_bar_ids as $value ) {
@@ -203,6 +275,8 @@ function wpcf7sp_editor_panel_cf7_show_page( $form_id ) {
 
     wpcf7sp_search_on_posttypes( $form_id ); 
 
-    wpcf7sp_search_on_textwidget( $form_id );
+    wpcf7sp_search_on_text_widget( $form_id );
+
+    wpcf7sp_search_on_custom_html_widget( $form_id );
     
 }
