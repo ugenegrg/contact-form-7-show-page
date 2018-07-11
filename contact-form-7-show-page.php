@@ -58,6 +58,7 @@ function wpcf7sp_search_string( $form_id ) {
     $wpcf7sp_form_id       = $form_id->id();
     
     $wpcf7sp_search_string = 'contact-form-7 id="' . $wpcf7sp_form_id . '"';
+    return $wpcf7sp_search_string;
 }
 
 /**
@@ -75,7 +76,8 @@ function wpcf7sp_search_on_posttypes( $form_id ) {
 
     $post_query = new WP_Query( array(
         's'         => $wpcf7sp_search_string,
-        'post_type' => $wpcf7sp_posttypes
+        'post_type' => $wpcf7sp_posttypes,
+        'posts_per_page' => -1
     ) );
 
     if ( $post_query->have_posts() ) { ?>
@@ -95,11 +97,11 @@ function wpcf7sp_search_on_posttypes( $form_id ) {
                 ?>
                 <tr>
                     <td width="50%"><?php the_title(); ?></td>
-                    <td width="25%"><?php echo $post_type; ?></td>
+                    <td width="25%"><?php echo esc_html( $post_type ); ?></td>
                     <td width="25%" class="wpcf7sp-opt">
                         <a href="<?php the_permalink(); ?>" class="wpcf7sp-alink" target="_blank">View</a>
-                        <a href="<?php echo get_edit_post_link( get_the_ID() ); ?>" class="wpcf7sp-alink"
-                           target="_blank">Edit</a>
+                        <a href="<?php echo esc_url( get_edit_post_link( get_the_ID() ) ); ?>" class="wpcf7sp-alink"
+                           target="_blank"><?php _e( 'Edit', 'wpcf7sp' ); ?></a>
                     </td>
                 </tr>
                 <?php
