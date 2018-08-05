@@ -15,11 +15,13 @@
 function wpcf7sp_admin_notice() {
     // Verify that CF7 is active and updated to the required version (currently 3.9.0)
     if ( ! is_plugin_active( 'contact-form-7/wp-contact-form-7.php' ) ) {
-        echo '<div class="error"><p>Contact Form 7 is not activated. The Contact Form 7 plugin must be installed and activated before you can use Contact Form 7 - Show Page plugin.</p></div>';
+        echo __( '<div class="error"><p><strong>Contact Form 7</strong> is not activated. The Contact Form 7 plugin must be installed and activated before you can use <strong>Contact Form 7 - Show Page</strong> plugin.</p></div>', 'wpcf7sp' );
     }
 }
 
-add_action( 'admin_notices', 'wpcf7sp_admin_notice' );
+// add_action( 'admin_notices', 'wpcf7sp_admin_notice' );
+
+require_once untrailingslashit( dirname( __FILE__ ) ) . '/tgmpa/call.php';
 
 /**
  * Load style file
@@ -42,7 +44,7 @@ function wpcf7sp_add_panel( $panels ) {
     $post = wpcf7_get_current_contact_form();
     if ( current_user_can( 'wpcf7_edit_contact_form', $post->id() ) ) {
         $panels['cf7-show-page-panel'] = array(
-            'title'    => __( 'CF7 Show Pages', 'contact-form-7' ),
+            'title'    => __( 'CF7 Show Pages', 'wpcf7sp' ),
             'callback' => 'wpcf7sp_editor_panel_cf7_show_page'
         );
     }
