@@ -4,7 +4,7 @@ Donate link: #
 Tags: Contact Form 7, form, forms, contactform7, contact form, find contact form, show page contact form 7, where contact form
 Requires at least: 4.5
 Tested up to: 4.9
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -62,9 +62,10 @@ Yes, this plugin is the extension to the famous Contact Form 7 plugin and thus C
 
 == Changelog ==
 
-= 1.0.3 July 12 2018 =
+= 1.0.3 Dec 4 2018 =
 * Upgrade: Search on **Custom HTML**  widget too.
 * Refactor code
+* Add TGM Plugin Activation PHP library 
 
 = 1.0.2 =
 * Add message when post types or widgets do not use the Contact Form.

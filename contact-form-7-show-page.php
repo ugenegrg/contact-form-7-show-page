@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Contact Form 7 - Show Page
  * Description: An add-on for Contact Form 7 that shows the all the post types where the contact form is being used.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Sachyya, Ugene
  * Author URI:
  * License: GPLv3
@@ -113,7 +113,7 @@ function wpcf7sp_search_on_posttypes( $form_id ) {
         </table>
         <?php
     } else { ?>
-        <h4><?php _e( 'No posts or pages use this form right now.', 'wpcf7sp' ); ?></h4>
+        <h4><?php _e( 'No "Posts" or "Pages" use this form right now.', 'wpcf7sp' ); ?></h4>
     <?php } 
 }
 
@@ -169,7 +169,7 @@ function wpcf7sp_search_on_text_widget( $form_id ) {
         $side_bar_ids = array_unique( $side_bar_ids );
         ?>
 
-        <h4><?php _e( 'Lists of areas using this form.', 'wpcf7sp' ); ?></h4>
+        <h4><?php _e( 'Lists of widgets using this form.', 'wpcf7sp' ); ?></h4>
         <?php if ( ! is_null( $wpcf7sp_text_widgets ) ): ?>
             <table class="wpcf7sp" style="width: 50%;">
                 <tbody>
@@ -188,7 +188,7 @@ function wpcf7sp_search_on_text_widget( $form_id ) {
             </table>
         <?php endif; ?>
     <?php } else { ?>
-        <h4><?php _e( 'No Text widgets uses this form right now.', 'wpcf7sp' ); ?></h4>
+        <h4><?php _e( 'No "Text widgets" uses this form right now.', 'wpcf7sp' ); ?></h4>
     <?php }
 }
 
@@ -262,7 +262,7 @@ function wpcf7sp_search_on_custom_html_widget( $form_id ) {
             </table>
         <?php endif; ?>
     <?php } else { ?>
-        <h4><?php _e( 'No Text widgets uses this form right now.', 'wpcf7sp' ); ?></h4>
+        <h4><?php _e( 'No "Custom HTML" widgets uses this form right now.', 'wpcf7sp' ); ?></h4>
     <?php }
 }
 

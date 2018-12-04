@@ -92,8 +92,8 @@ function wpcf7sp_register_required_plugins() {
 			'menu_title'                      => __( 'Install Plugins', 'wpcf7sp' ),
 			'installing'                      => __( 'Installing Plugin: %s', 'wpcf7sp' ),
 			'notice_can_install_required'     => _n_noop(
-				'%1$s plugin is required.',
-				'%1$s plugin is required.',
+				'%1$s plugin is required for "Contact Form 7 - Show Page" to work.',
+				'%1$s plugin is required "Contact Form 7 - Show Page" to work.',
 				'wpcf7sp'
 			),
 			/* translators: %s: plugin name. * /

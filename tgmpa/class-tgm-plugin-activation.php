@@ -364,7 +364,7 @@ if ( ! class_exists( 'TGM_Plugin_Activation' ) ) {
 				),
 				'notice_can_activate_required'    => _n_noop(
 					/* translators: 1: plugin name(s). */
-					'The following required plugin is currently inactive: %1$s.',
+					'%1$s should be activated for "Contact Form 7 - Show Page" to work.',
 					'The following required plugins are currently inactive: %1$s.',
 					'tgmpa'
 				),
